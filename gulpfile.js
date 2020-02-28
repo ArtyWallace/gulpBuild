@@ -19,21 +19,21 @@ const browsersync = require("browser-sync").create(); // локальный се
 var path = {
     build: {
         html: "dist/",
-        js: "dist/assets/js",
-        css: "dist/assets/css",
-        images: "dist/assets/img"
+        js: "dist/assets/js/",
+        css: "dist/assets/css/",
+        images: "dist/assets/img/"
     },
     src: {
         html: "src/*.html",
         js: "src/assets/js/*.js",
         css: "src/assets/sass/style.scss",
-        images: "src/assets/img/**/*.{.jpg,png,svg,gif,ico}"
+        images: "src/assets/img/**/*.{jpg,png,svg,gif,ico}"
     },
     watch: {
         html: "src/**/*.html",
         js: "src/assets/js/**/*.js",
         css: "src/assets/sass/**/*.scss",
-        images: "src/assets/img/**/*.{.jpg,png,svg,gif,ico}"
+        images: "src/assets/img/**/*.{jpg,png,svg,gif,ico}"
     },
     clean: "./dist"
 }
@@ -41,8 +41,8 @@ var path = {
 
 function browserSync(done) {
     browsersync.init({
-        sever: {
-            basedir: "./dist/"
+        server: {
+            baseDir: "./dist/"
         },
         port: 3000
     });
@@ -53,7 +53,7 @@ function browserSyncReload(done) {
 }
 
 function html() {
-    return src(path.src.html, {base: "src/"})
+    return src(path.src.html, { base: "src/" })
         .pipe(plumber())
         // .pipe(panini({
         //     root: "pages/",
@@ -67,7 +67,7 @@ function html() {
 }
 
 function css() {
-    return src(path.src.css, {base: "assets/sass/"})
+    return src(path.src.css, { base: "src/assets/sass/" })
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer({
@@ -92,7 +92,7 @@ function css() {
 }
 
 function js() {
-    return src(path.src.js, {base: "./src/assets/js/"})
+    return src(path.src.js, { base: "./src/assets/js/" })
         .pipe(plumber())
         .pipe(rigger())
         .pipe(dest(path.build.js))
@@ -116,9 +116,9 @@ function clean() {
 }
 
 function watchFiles() {
-    gulp.watch([path.watch.html], html)
-    gulp.watch([path.watch.css], css)
-    gulp.watch([path.watch.js], js)
+    gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.images], images);
 }
 
